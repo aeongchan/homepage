@@ -1,0 +1,51 @@
+baseURL: "https://aeong.win/"
+title: aeong
+paginate: 5
+theme: PaperMod
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+
+params:
+  env: production
+  comments: true
+  defaultTheme: auto
+  showReadingTime: true
+  showBreadCrumbs: true
+  showPageNums: true
+  showToc: true
+
+  profileMode:
+    enabled: true
+    subtitle: "**:warning: On August 23, 2024, my domain will be changed to aeong.win, so please be aware previous domain after the date!**"
+    imageUrl: "https://cdn.discordapp.com/emojis/769930277375967282.gif?size=128&quality=lossless"
+    buttons:
+      - name: PurpleTV Archive
+        url: "https://purpletv.aeong.win"
+      - name: Donate
+        url: "/donate"
+  socialIcons:
+    - name: github
+      url: "https://github.com/aeongdesu"
+
+menu:
+  main:
+    - name: 블로그
+      url: /posts/
+      weight: 1
+    - name: 검색
+      url: /search/
+      weight: 2
