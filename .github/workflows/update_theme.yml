@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 1
           submodules: recursive
 
-      - run: git submodule update --init --recursive
+      - run: git submodule update --remote
 
       - name: Commit files
         run: |
