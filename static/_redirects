@@ -1,5 +1,5 @@
 /discord https://discord.com/invite/5BGXdwAGa5
 /twitch https://twitch.tv/aeongdesu
 
-/skins/* https://github.com/NyanArchive/osuskins/releases/tag/:splat
+/skins/:userid https://github.com/NyanArchive/osuskins/releases/tag/:userid
 /files/* https://github.com/aeongdesu/aeongdesu/releases/download/drive/:splat
