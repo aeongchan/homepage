@@ -31,7 +31,7 @@ params:
   profileMode:
     enabled: true
     subtitle: "**:warning: On August 23, 2024, my domain will be changed to aeong.win, so please be aware previous domain after the date!**"
-    imageUrl: "https://cdn.discordapp.com/emojis/769930277375967282.gif?size=128&quality=lossless"
+    imageUrl: "/images/NyanHungry.gif"
     buttons:
       - name: PurpleTV Archive
         url: "https://purpletv.aeong.win"
