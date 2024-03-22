@@ -2,6 +2,7 @@ baseURL: "/"
 title: aeong
 paginate: 5
 theme: PaperMod
+timezone: Asia/Seoul
 
 enableRobotsTXT: true
 buildDrafts: false
