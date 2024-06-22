@@ -20,14 +20,29 @@ draft: false
 [유튜브 1](https://www.youtube.com/watch?v=gD-MWXdA8EI) [유튜브 2](https://www.youtube.com/watch?v=jdBjbOtwJGo) [레딧](https://www.reddit.com/r/WiiHacks/comments/tbzky7/wii_homebrew_guide_modded_to_stock_read_premises/) [wii.guide](https://wii.hacks.guide/wii-factory-reset.html) [mariokartwii.com](https://mariokartwii.com/showthread.php?tid=877)
 
 대충 백업된 NAND 파일을 이용하여 Ohneschwanzenegger 프로그램을 이용해 순정으로 바꿔놓고 복원하는 작업을 하라는데, **상당히 위험한 작업이라고 한다.**\
-이유는 BootMii이 iOS에만 깔려있으면 복원하다 잘못될시 **영원히 복돌상태로 남는다고 한다!** [^1]
+이유는 BootMii이 IOS에만 깔려있으면 복원하다 잘못될시 **영원히 복돌상태로 남는다고 한다!** [^1]
 
-초기 Wii엔 boot2에 취약점이 있어 BootMii 설치가 가능해 고장나도 안전하게 복구가 가능하지만 후기 Wii(한국판 포함)엔 막혀서 iOS만 설치가 가능하다고 하는데.. *알빤가?*\
-NAND만 잘 백업된다면 Dolphin 에뮬에서 돌리면 그만이긴 하다, 중고에 아직 매물이 있기도 하고.
+초기 Wii엔 boot2에 취약점이 있어 BootMii 설치가 가능해 벽돌이 나도 안전하게 복구가 가능하지만 후기 Wii(한국판 포함)엔 막혀서 IOS만 설치가 가능하다고 하는데.. *알빤가?*\
+벽돌시 NAND만 잘 백업된다면 Dolphin 에뮬에서 돌리면 그만이긴 하다, 중고에 아직 매물이 있기도 하고.
+
+## 궁금증
+그래도 쫄리니 최대한 지금 궁금한 것들을 풀고 진행하려고 한다.
+
+우선 mariokartwii에는 다른 튜토리얼과 달리 따로 준비된 순정 NAND 패키지 파일로 진행하는데, 차이점이 있는지 직접 물어보았다.
+
+![](./images/vega_dm.png)
+
+그저 인터넷 필요 없이 가능한 튜토리얼인걸로! 추가적으로 더 물어보려 했으나 모딩에서 손 놓으신지 많이 오래되셔서 여기까지 물어보았다.
+
+다음은 복원이 제대로 되는가이다, BootMii on IOS에서 복원하면 스스로 덮어쓴다는(!) [포럼 댓글](https://forum.wiibrew.org/read.php?25,44256,50092)을 찾은지라 BootMii이 없는 순정 NAND를 복원시키면 혹시라도 실패하는가 하는 생각이 들었다.
+
+![](./images/nand_restore_safe.png)
+
+헛된 생각이였고 IOS에서 사례가 딱 하나 있어서 진행하기로 했다. 고마워요 대신맨!
+
 
 ## 문제
-NAND 복원하려면 게임큐브 컨트롤러로 코나미 코드를 입력해야 된다고 한다(...)\
-얼마나 위험하면 Wii가 아닌 게임큐브 컨트롤러를 사용해야 한다니, 살짝 쫄린다.
+NAND 복원하려면 게임큐브 컨트롤러로 코나미 코드를 입력해야 된다고 한다(...)
 
 ![](./images/aliexpress.png)
 
