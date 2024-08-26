@@ -8,7 +8,9 @@ params:
 ---
 
 # [ko-fi](https://ko-fi.com/aeong)
+paypal ok
 
 ---
 
-# [토스](https://toss.me/bread)
+# [toonation](https://toon.at/donate/nyan)
+투네이션
