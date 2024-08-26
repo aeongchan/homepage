@@ -31,7 +31,7 @@ params:
 
   profileMode:
     enabled: true
-    subtitle: "**:warning: On August 23, 2024, my domain will be changed to aeong.win, so please be aware previous domain after the date!**"
+    subtitle: "tsundere save the world"
     imageUrl: "/images/NyanHungry.gif"
     buttons:
       - name: PurpleTV Archive
