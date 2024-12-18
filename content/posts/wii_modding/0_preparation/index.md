@@ -19,7 +19,7 @@ draft: false
 
 [유튜브 1](https://www.youtube.com/watch?v=gD-MWXdA8EI) [유튜브 2](https://www.youtube.com/watch?v=jdBjbOtwJGo) [레딧](https://www.reddit.com/r/WiiHacks/comments/tbzky7/wii_homebrew_guide_modded_to_stock_read_premises/) [wii.guide](https://wii.hacks.guide/wii-factory-reset.html) [mariokartwii.com](https://mariokartwii.com/showthread.php?tid=877)
 
-대충 백업된 NAND 파일을 이용하여 Ohneschwanzenegger 프로그램을 이용해 순정으로 바꿔놓고 복원하는 작업을 하라는데, **상당히 위험한 작업이라고 한다.**\
+대충 백업된 NAND 파일을 Ohneschwanzenegger 프로그램을 이용해 순정으로 바꿔놓고 복원하는 작업을 하라는데, **상당히 위험한 작업이라고 한다.**\
 이유는 BootMii이 IOS에만 깔려있으면 복원하다 잘못될시 **영원히 복돌상태로 남는다고 한다!** [^1]
 
 초기 Wii엔 boot2에 취약점이 있어 BootMii 설치가 가능해 벽돌이 나도 안전하게 복구가 가능하지만 후기 Wii(한국판 포함)엔 막혀서 IOS만 설치가 가능하다고 하는데.. *알빤가?*\
