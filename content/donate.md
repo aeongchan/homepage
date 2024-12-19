@@ -5,6 +5,7 @@ showToc: false
 comments: false
 params:
   showReadingTime: false
+  searchHidden: true
 ---
 
 # [ko-fi](https://ko-fi.com/aeong)

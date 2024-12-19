@@ -6,6 +6,7 @@ showBreadCrumbs: false
 comments: false
 params:
   showReadingTime: false
+  searchHidden: true
 ---
 
 ---

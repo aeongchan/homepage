@@ -1,7 +1,7 @@
 ---
 title: "Wii 모딩 - 0. 준비"
 date: 2024-06-22T12:32:16+09:00
-draft: false
+draft: true
 ---
 
 ## 들어가기에 앞서

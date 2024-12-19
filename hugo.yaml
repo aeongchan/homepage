@@ -31,7 +31,7 @@ params:
 
   profileMode:
     enabled: true
-    subtitle: "tsundere save the world"
+    subtitle: "[tsundere save the world](/about)"
     imageUrl: "/images/NyanHungry.gif"
     buttons:
       - name: PurpleTV Archive
