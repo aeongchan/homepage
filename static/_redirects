@@ -2,4 +2,8 @@
 /twitch https://twitch.tv/aeongdesu
 
 /skins/:userid https://github.com/NyanArchive/osuskins/releases/tag/:userid
+/skins/:userid/:name.osk https://github.com/NyanArchive/osuskins/releases/download/:userid/:name
+/skins/:name.osk https://github.com/aeongdesu/aeongdesu/releases/download/osuskin/:name
 /files/* https://github.com/aeongdesu/aeongdesu/releases/download/drive/:splat
+
+
