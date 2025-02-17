@@ -1,6 +1,5 @@
 baseURL: ""
 title: aeong
-paginate: 5
 theme: PaperMod
 timezone: Asia/Seoul
 
@@ -12,13 +11,16 @@ enableEmoji: true
 
 minify:
   disableXML: true
-  # minifyOutput: true
+  minifyOutput: true
 
 outputs:
   home:
     - HTML
     - RSS
     - JSON
+
+pagination:
+  pagerSize: 5
 
 params:
   env: production

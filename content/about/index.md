@@ -54,7 +54,24 @@ taking a break
 - webcam
     - logitech c270
 - microphone
-    - hyperx quadcast s
+    - hyperx quadcast
 - tablet
     - wacom ctl-480
         ![otd-20241219](./images/otd.png)
+        > +20240217\
+        > follow radius - 0\
+        > 73x51 x46 y39.5
+
+
+{{< collapse summary="FAQ" >}}
+
+- what games do you play\
+  osu!, fallguys, thefinals, yeah thats it
+  - wait, then you dont play any major games like league, apex, etc?\
+    in fact.. yes\
+    my brain doesnt allow to understand them, and **not interested & fun**
+
+- you stupid\
+  sorry
+
+{{< /collapse >}}
