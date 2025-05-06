@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans:
+    "Pretendard", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-additive: var(--additive);
+  --color-additive-foreground: var(--additive-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --background: oklch(0.99 0.0161 95.22); /* flexoki bg */
+  --foreground: oklch(0.17 0.0017 17.32); /* flexoki dark bg */
+  --primary: oklch(0.54 0.0078 97.45); /* flexoki tx-2 */
+  --primary-foreground: oklch(0.986 0.0161 95.22); /* flexoki dark tx */
+  --secondary: oklch(0.95 0.0147 98.29); /* flexoki bg-2 */
+  --secondary-foreground: oklch(0.54 0.0078 97.45);
+  --muted: oklch(0.95 0.0147 98.29);
+  --muted-foreground: oklch(0.55 0.0863 186.74); /* flexoki cy */
+  --accent: oklch(0.95 0.0147 98.29);
+  --accent-foreground: oklch(0.54 0.0078 97.45);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.92 0.0149 98.3); /* flexoki ui */
+  --ring: oklch(0.77 0.0128 96.47); /* flexoki tx-3 */
+}
+
+.dark {
+  --background: oklch(0.17 0.0017 17.32);
+  --foreground: oklch(0.986 0.0161 95.22);
+  --primary: oklch(0.92 0.0149 98.3);
+  --primary-foreground: oklch(0.54 0.0078 97.45);
+  --secondary: oklch(0.27 0.0023 67.73); /* flexoki dark ui */
+  --secondary-foreground: oklch(0.986 0.0161 95.22);
+  --muted: oklch(0.27 0.0023 67.73);
+  --muted-foreground: oklch(0.77 0.0128 96.47);
+  --accent: oklch(0.27 0.0023 67.73);
+  --accent-foreground: oklch(0.986 0.0161 95.22);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(0.99 0.0161 95.22 / 10%);
+  --ring: oklch(0.77 0.0128 96.47);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    @apply border-border outline-ring/50 tracking-tight;
+  }
+
+  html {
+    @apply bg-background text-foreground scheme-light;
+
+    &.dark {
+      @apply scheme-dark;
+    }
+
+    @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
+  }
+
+  .disable-transitions * {
+    @apply transition-none!;
+  }
+}

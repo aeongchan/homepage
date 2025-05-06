@@ -1,0 +1,20 @@
+{
+	"name": "homepage",
+	"image": "mcr.microsoft.com/devcontainers/base:bullseye",
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/devcontainer-community/devcontainer-features/bun.sh:1": {}
+	},
+	"forwardPorts": [1234],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"oven.bun-vscode",
+				"astro-build.astro-vscode"
+			]
+		}
+	},
+	"containerEnv": {
+		"ASTRO_TELEMETRY_DISABLED": "1"
+	}
+}

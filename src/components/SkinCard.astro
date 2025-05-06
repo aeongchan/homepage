@@ -1,0 +1,58 @@
+---
+import Link from "@/components/Link.astro"
+import { Badge } from "@/components/ui/badge"
+import { formatDate } from "@/lib/utils"
+import { Icon } from "astro-icon/components"
+import { Image } from "astro:assets"
+import type { CollectionEntry } from "astro:content"
+
+interface Props {
+  skin: CollectionEntry<"skins">
+}
+
+const { skin } = Astro.props
+---
+
+<div
+  class="hover:bg-secondary/50 overflow-hidden rounded-xl border transition-colors duration-300 ease-in-out">
+  <Link href={skin.data.link} class="block flex flex-col" external>
+    {
+      skin.data.image && (
+        <div class="sm:shrink-0">
+          <Image
+            src={skin.data.image}
+            alt={skin.data.name}
+            class="pointer-events-none max-h-64 w-full object-cover"
+          />
+        </div>
+      )
+    }
+    <div class="grow p-4">
+      <h3 class="mb-1 text-lg font-medium">
+        {skin.data.name}
+      </h3>
+      <p class="text-muted-foreground mb-2 text-sm">
+        {skin.data.description}
+      </p>
+      {
+        skin.data.date && (
+          <p class="text-muted-foreground/70 mb-2 flex items-center gap-x-1.5 text-xs">
+            <span class="flex items-center gap-x-1.5">
+              <Icon name="lucide:calendar" class="size-3" />
+              <span>{formatDate(skin.data.date)}</span>
+            </span>
+          </p>
+        )
+      }
+      {
+        skin.data.tags && (
+          <div class="flex flex-wrap gap-2">
+            {skin.data.tags.map((tag: string) => (
+              <Badge variant="secondary">{tag}</Badge>
+            ))}
+          </div>
+        )
+      }
+    </div>
+  </Link>
+</div>
