@@ -43,7 +43,7 @@
   --secondary: oklch(0.95 0.0147 98.29); /* flexoki bg-2 */
   --secondary-foreground: oklch(0.54 0.0078 97.45);
   --muted: oklch(0.95 0.0147 98.29);
-  --muted-foreground: oklch(0.55 0.0863 186.74); /* flexoki cy */
+  --muted-foreground: oklch(0.54 0.0078 97.45);
   --accent: oklch(0.95 0.0147 98.29);
   --accent-foreground: oklch(0.54 0.0078 97.45);
   --destructive: oklch(0.577 0.245 27.325);
