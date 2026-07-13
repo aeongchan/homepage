@@ -5,9 +5,13 @@ import RSS from "@/assets/icons/rss.svg"
 import Twitter from "@/assets/icons/twitter.svg"
 
 export const SITE = {
-  title: "astro-erudite",
-  description: "An opinionated, unstyled blogging template built with Astro.",
-  locale: "en-US",
+  title: "aeong.win",
+  description: "useless homepage",
+  author: {
+    name: "aeong",
+    imageUrl: "https://a.ppy.sh/14709263?1780666093.png",
+  },
+  locale: "ko-KR",
   dir: "ltr",
   defaultPageImage: "/static/opengraph-image.png",
   defaultPostImage: "/static/1200x630.png",
@@ -16,7 +20,6 @@ export const SITE = {
 export const NAVIGATION = [
   { href: "/blog", label: "Blog" },
   { href: "/projects", label: "Projects" },
-  { href: "/authors", label: "Authors" },
 ]
 
 export const SOCIALS: { href: string; label: string; icon: SvgComponent }[] = [

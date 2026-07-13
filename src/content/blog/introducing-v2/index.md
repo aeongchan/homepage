@@ -1,9 +1,7 @@
 ---
-title: "Introducing astro-erudite v2"
+title: "test post"
 description: "I've rebuilt my blogging template from scratch, and it's better in every way I know how to measure."
 date: 2026-06-06
-authors:
-  - enscribe
 image: ./assets/banner.png
 tags:
   - v2

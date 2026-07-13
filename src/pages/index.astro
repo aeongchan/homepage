@@ -1,29 +1,22 @@
 ---
 import MetaPage from "@/components/MetaPage.astro"
 import Layout from "@/layouts/Layout.astro"
+import { SITE } from "@/consts"
 ---
 
 <Layout>
   <MetaPage slot="head" />
   <dictionary-entry>
-    <h1>er·u·dite</h1>
-    <etymology-span>
-      <ipa-span>/ˈer(y)əˌdīt/</ipa-span>
-      adj. [L. <i>ēruditus</i>, instructed, pp. of <i>ērudīre</i> to instruct,
-      polish, lit. to free from roughness, f. ē- out + <i>rudis</i> rough,
-      untrained]
-    </etymology-span>
-    <ol>
-      <li>
-        having or showing deep, wide-ranging knowledge acquired through study;
-        learned (<i>an erudite scholar</i>).
-      </li>
-      <li>
-        (of writing, speech, or argument) reflecting such knowledge; scholarly (<i
-          >an erudite footnote</i
-        >).
-      </li>
-    </ol>
+    <author>
+      <img
+        src={SITE.author.imageUrl}
+        alt={SITE.author.name}
+        width="64"
+        height="64"
+      >
+    </author>
+    <h1>aeong</h1>
+    <etymology-span> nothing to say here </etymology-span>
     <hr>
     <prose-content>
       <p>
@@ -64,6 +57,13 @@ import Layout from "@/layouts/Layout.astro"
 
     ipa-span {
       opacity: 0.6;
+    }
+
+    author {
+      img {
+        flex-shrink: 0;
+        border-radius: var(--radius-full);
+      }
     }
 
     h1 {
