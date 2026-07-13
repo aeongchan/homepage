@@ -1,0 +1,26 @@
+---
+import MetaPage from "@/components/MetaPage.astro"
+import SkinCard from "@/components/SkinCard.astro"
+import Layout from "@/layouts/Layout.astro"
+import { getCollection } from "astro:content"
+
+const skins = (await getCollection("skins")).sort(
+  (a, b) =>
+    (b.data.startDate?.getTime() ?? 0) - (a.data.startDate?.getTime() ?? 0),
+)
+---
+
+<Layout>
+  <MetaPage slot="head" title="Skins" />
+  <ul>
+    {skins.map((skin) => <SkinCard project={skin} />)}
+  </ul>
+</Layout>
+
+<style>
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+</style>

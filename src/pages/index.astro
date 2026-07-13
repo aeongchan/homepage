@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets"
 import MetaPage from "@/components/MetaPage.astro"
 import Layout from "@/layouts/Layout.astro"
 import { SITE } from "@/consts"
@@ -8,38 +9,39 @@ import { SITE } from "@/consts"
   <MetaPage slot="head" />
   <dictionary-entry>
     <author>
-      <img
+      <Image
         src={SITE.author.imageUrl}
         alt={SITE.author.name}
         width="64"
         height="64"
-      >
+      />
     </author>
     <h1>aeong</h1>
     <etymology-span> nothing to say here </etymology-span>
     <hr>
     <prose-content>
+      <p>주로 정보글 같은걸 올릴것 같습니다 아마도</p>
       <p>
-        astro-erudite is
-        <a href="https://enscribe.dev" target="_blank" rel="noopener noreferrer"
-          >enscribe</a
-        >'s opinionated, unstyled static blogging template built with
-        <a href="https://astro.build" target="_blank" rel="noopener noreferrer"
-          >Astro</a
-        >
-        and native CSS. astro-erudite uses no UI or CSS framework and contains
-        minimal dependencies.
-      </p>
-      <p>
-        To use this template, check out the
         <a
-          href="https://github.com/jktrn/astro-erudite"
+          href="https://osu.ppy.sh/users/14709263"
           target="_blank"
           rel="noopener noreferrer"
-          >GitHub</a
+          >osu!</a
         >
-        repository. To learn more about why this template exists, read this blog
-        post: <a href="/blog/introducing-v2">Introducing astro-erudite v2</a>.
+        |
+        <a
+          href="https://vrchat.com/home/user/usr_3a5ad830-93e3-4df1-9bcb-8fbfd41f980c"
+          target="_blank"
+          rel="noopener noreferrer"
+          >VRChat</a
+        >
+        |
+        <a
+          href="https://discord.com/users/548821619661864962"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Discord</a
+        >
       </p>
     </prose-content>
   </dictionary-entry>
