@@ -1,0 +1,13 @@
+---
+import MetaPage from "@/components/MetaPage.astro"
+import ProjectList from "@/components/ProjectList.astro"
+import Layout from "@/layouts/Layout.astro"
+import { getCollection } from "astro:content"
+
+const projects = await getCollection("projects")
+---
+
+<Layout>
+  <MetaPage slot="head" title="Projects" />
+  <ProjectList projects={projects} />
+</Layout>

@@ -1,0 +1,172 @@
+---
+import MetaPost from "@/components/MetaPost.astro"
+import PostActions from "@/components/PostActions.astro"
+import ScrollToTop from "@/components/ScrollToTop.astro"
+import SeriesBox from "@/components/SeriesBox.astro"
+import SeriesNav from "@/components/SeriesNav.astro"
+import TableOfContents from "@/components/TableOfContents.astro"
+import Layout from "@/layouts/Layout.astro"
+import { getPosts, getSeries } from "@/lib/content"
+import { formatDate } from "@/lib/utils"
+import { Image } from "astro:assets"
+import { render, type CollectionEntry } from "astro:content"
+
+export async function getStaticPaths() {
+  const posts = await getPosts()
+  return posts.map((post, i) => {
+    const series = post.data.series
+      ? getSeries(posts, post.data.series)
+      : undefined
+    const at = series?.findIndex(({ id }) => id === post.id) ?? -1
+    return {
+      params: { id: post.id },
+      props: {
+        post,
+        prev: posts[i + 1],
+        next: posts[i - 1],
+        series,
+        seriesPrev: series?.[at - 1],
+        seriesNext: series?.[at + 1],
+      },
+    }
+  })
+}
+
+type Post = CollectionEntry<"blog">
+type Props = {
+  post: Post
+  prev?: Post
+  next?: Post
+  series?: Post[]
+  seriesPrev?: Post
+  seriesNext?: Post
+}
+
+const { post, prev, next, series, seriesPrev, seriesNext } = Astro.props
+const { Content, headings } = await render(post)
+const tocHeadings = headings.filter(
+  ({ depth, text }) => depth >= 2 && depth <= 4 && text.trim(),
+)
+---
+
+<Layout>
+  <MetaPost slot="head" post={post} />
+  {tocHeadings.length > 0 && (
+    <TableOfContents
+      slot="toc"
+      title={post.data.title}
+      headings={tocHeadings}
+    />
+  )}
+  <PostActions slot="actions" prev={prev} next={next} />
+  <ScrollToTop floating />
+  <article data-url={`/blog/${post.id}`}>
+    <header>
+      <h1>{post.data.title}</h1>
+      <post-meta>
+        {post.data.draft && <post-draft>Draft</post-draft>}
+        <time datetime={post.data.date.toISOString()}>
+          {formatDate(post.data.date)}
+        </time>
+        {post.data.tags && (
+          <post-tags>
+            {post.data.tags.map((tag) => (
+              <a href={`/tags/${tag}`}>#{tag}</a>
+            ))}
+          </post-tags>
+        )}
+      </post-meta>
+      {post.data.description && <p>{post.data.description}</p>}
+    </header>
+    {post.data.image && (
+      <post-banner>
+        <Image
+          src={post.data.image}
+          alt={post.data.title}
+          width={1200}
+          height={630}
+          priority
+        />
+      </post-banner>
+    )}
+    {post.data.series && series && (
+      <SeriesBox name={post.data.series} posts={series} current={post.id} />
+    )}
+    <prose-content>
+      <Content />
+    </prose-content>
+    <SeriesNav prev={seriesPrev} next={seriesNext} />
+  </article>
+</Layout>
+
+<style>
+  header {
+    margin-block-end: var(--space-m);
+
+    h1 {
+      font-size: var(--step-3);
+      line-height: calc(var(--leading-offset) + 1em);
+      font-weight: var(--font-weight-medium);
+    }
+
+    post-meta {
+      --underline: var(--muted-foreground);
+
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3xs);
+      margin-block-start: var(--space-3xs);
+      font-size: var(--step--1);
+      color: var(--muted-foreground);
+
+      post-draft {
+        padding-inline: var(--space-2xs);
+        font-size: 0.85em;
+        color: var(--destructive);
+        border: 1px solid currentColor;
+        border-radius: var(--radius-sm);
+      }
+
+      post-tags {
+        --underline: transparent;
+
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3xs);
+
+        a {
+          color: color-mix(in oklab, var(--muted-foreground) 50%, transparent);
+
+          &:hover {
+            color: var(--foreground);
+          }
+        }
+      }
+
+      time ~ post-tags::before {
+        content: "·";
+      }
+
+      a {
+        color: var(--foreground);
+      }
+    }
+
+    > p {
+      margin-block-start: var(--space-2xs);
+      font-size: var(--step--1);
+      color: var(--muted-foreground);
+    }
+  }
+
+  post-banner {
+    display: block;
+    margin-block-end: var(--space-m);
+
+    :global(img) {
+      inline-size: 100%;
+      block-size: auto;
+    }
+  }
+</style>

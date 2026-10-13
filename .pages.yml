@@ -1,0 +1,145 @@
+media:
+  name: images
+  label: Images
+  input: src/assets/images
+  output: "@/assets/images"
+  categories: [image]
+  rename: random
+
+settings:
+  commit:
+    templates:
+      create: "content: add {path}"
+      update: "content: update {path}"
+      delete: "content: remove {path}"
+      rename: "content: rename {oldPath} to {newPath}"
+
+components:
+  cover-image:
+    type: image
+    label: Cover image
+    description: "1200x630 recommended"
+
+content:
+  - name: posts
+    label: Posts
+    type: collection
+    path: src/content/blog
+    filename:
+      template: "{uuid}.md"
+      field: false
+    subfolders: false
+    view:
+      fields: [title, date, series, draft]
+      primary: title
+      sort: [date, title]
+      search: [title, series]
+      default:
+        sort: date
+        order: desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: uuid
+        label: Post ID
+        type: uuid
+        options:
+          editable: false
+          generate: false
+      - name: description
+        label: Description
+        type: text
+      - name: date
+        label: Date
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: draft
+        label: Draft
+        type: boolean
+        default: true
+      - name: series
+        label: Series
+        type: string
+      - name: seriesOrder
+        label: Series order
+        type: number
+        description: "Position within the series. By default, posts are ordered by date (oldest first)."
+      - name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: image
+        component: cover-image
+        options:
+          path: src/assets/images/posts
+      - name: body
+        label: Body
+        type: rich-text
+        description: "Editing in the editor tab can alter titled callouts, raw html and footnotes. Use the source tab for those."
+        options:
+          format: markdown
+          media: images
+          path: src/assets/images/posts
+
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    filename: &showcase-filename
+      template: "{primary}.md"
+      field: create
+    subfolders: false
+    view: &showcase-view
+      fields: [name, link]
+      primary: name
+      sort: [name]
+      search: [name]
+    fields:
+      - &showcase-name
+        name: name
+        label: Name
+        type: string
+        required: true
+      - &showcase-description
+        name: description
+        label: Description
+        type: text
+        required: true
+      - &showcase-link
+        name: link
+        label: Link
+        type: string
+        required: true
+        pattern:
+          regex: "^https?://"
+          message: "Use a full URL starting with http:// or https://"
+      - &showcase-tags
+        name: tags
+        label: Tags
+        type: string
+        list: true
+      - name: image
+        component: cover-image
+        options:
+          path: src/assets/images/projects
+
+  - name: skins
+    label: Skins
+    type: collection
+    path: src/content/skins
+    filename: *showcase-filename
+    subfolders: false
+    view: *showcase-view
+    fields:
+      - *showcase-name
+      - *showcase-description
+      - *showcase-link
+      - *showcase-tags
+      - name: image
+        component: cover-image
+        options:
+          path: src/assets/images/skins

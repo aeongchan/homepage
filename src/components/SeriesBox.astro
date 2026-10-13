@@ -1,0 +1,171 @@
+---
+import ChevronIcon from "@/assets/icons/callouts/alt-arrow-down.svg"
+import type { CollectionEntry } from "astro:content"
+
+type Props = { name: string; posts: CollectionEntry<"blog">[]; current: string }
+
+const { name, posts, current } = Astro.props
+const position = posts.findIndex((post) => post.id === current) + 1
+const collapsible = posts.length > 4
+---
+
+<series-box data-collapsible={collapsible || undefined}>
+  <series-title>
+    <series-label>Series</series-label>
+    <span>{name}</span>
+    <series-count>{position} / {posts.length}</series-count>
+  </series-title>
+  <ol>
+    {posts.map((post) => (
+      <li>
+        {post.id === current ? (
+          <span aria-current="page">{post.data.title}</span>
+        ) : (
+          <a href={`/blog/${post.id}`}>{post.data.title}</a>
+        )}
+      </li>
+    ))}
+  </ol>
+  {collapsible && (
+    <button
+      type="button"
+      aria-expanded="false"
+      aria-label="Show all posts in this series"
+    >
+      <ChevronIcon aria-hidden="true" />
+    </button>
+  )}
+</series-box>
+
+<style>
+  series-box {
+    display: block;
+    margin-block-end: var(--space-m);
+    font-size: var(--step--1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  series-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    padding: var(--space-2xs) var(--space-xs) 0;
+    font-weight: var(--font-weight-medium);
+
+    series-label {
+      flex-shrink: 0;
+      padding-inline: var(--space-2xs);
+      font-size: 0.85em;
+      font-weight: var(--font-weight-normal);
+      color: var(--muted-foreground);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+    }
+
+    span {
+      min-inline-size: 0;
+    }
+
+    series-count {
+      margin-inline-start: auto;
+      flex-shrink: 0;
+      font-weight: var(--font-weight-normal);
+      color: var(--muted-foreground);
+    }
+  }
+
+  ol {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+    margin: var(--space-2xs) var(--space-xs) var(--space-2xs);
+    padding-inline-start: 1.75em;
+    list-style: decimal;
+    line-height: calc(var(--leading-offset) + 1em);
+
+    li::marker {
+      color: var(--muted-foreground);
+    }
+
+    a {
+      color: var(--muted-foreground);
+
+      &:hover {
+        color: var(--foreground);
+      }
+    }
+
+    [aria-current] {
+      font-weight: var(--font-weight-strong);
+    }
+  }
+
+  series-box[data-collapsed] ol {
+    max-block-size: calc(
+      3 *
+      (var(--leading-offset) + 1em) +
+      2 *
+      var(--space-3xs)
+    );
+    margin-block-end: 0;
+    padding-block-end: var(--space-2xs);
+    overflow: hidden;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100%;
+    padding-block: var(--space-3xs);
+    color: var(--muted-foreground);
+    background-color: color-mix(in oklab, var(--muted) 50%, transparent);
+    border-block-start: 1px solid var(--border);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--foreground);
+    }
+
+    svg {
+      inline-size: 1em;
+      block-size: 1em;
+    }
+
+    &[aria-expanded="true"] svg {
+      rotate: 180deg;
+    }
+  }
+</style>
+
+<script>
+  for (const box of document.querySelectorAll<HTMLElement>(
+    "series-box[data-collapsible]",
+  )) {
+    const list = box.querySelector("ol")
+    const button = box.querySelector("button")
+    const current =
+      box.querySelector<HTMLElement>("[aria-current]")?.parentElement
+    if (!list || !button) continue
+
+    const reveal = () => {
+      if (!current) return
+      list.scrollTop = Math.max(
+        0,
+        current.offsetTop - (list.clientHeight - current.offsetHeight) / 2,
+      )
+    }
+
+    box.setAttribute("data-collapsed", "")
+    reveal()
+
+    button.addEventListener("click", () => {
+      const collapsed = box.toggleAttribute("data-collapsed")
+      button.setAttribute("aria-expanded", String(!collapsed))
+      if (collapsed) reveal()
+    })
+  }
+</script>

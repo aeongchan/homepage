@@ -1,0 +1,123 @@
+---
+import "@/styles/reset.css"
+import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css"
+import "@/styles/fonts.css"
+import "@/styles/color.css"
+import "@/styles/typography.css"
+import "@/styles/typography-headings.css"
+import "@/styles/typography-inline.css"
+import "@/styles/typography-lists.css"
+import "@/styles/typography-block.css"
+import "@/styles/typography-tables.css"
+import "@/styles/callout.css"
+import "@/styles/layout.css"
+import "@/styles/icon-button.css"
+import "@/styles/bar.css"
+import "@/styles/shape.css"
+
+import Footer from "@/components/Footer.astro"
+import Header from "@/components/Header.astro"
+import MetaHead from "@/components/MetaHead.astro"
+import { SITE } from "@/consts"
+---
+
+<html lang={SITE.locale} dir={SITE.dir}>
+  <MetaHead>
+    <slot name="head" />
+  </MetaHead>
+  <body>
+    <page-header>
+      <page-nav>
+        <Header><slot name="actions" slot="actions" /></Header>
+      </page-nav>
+      {Astro.slots.has("toc") && (
+        <page-toc>
+          <slot name="toc" />
+        </page-toc>
+      )}
+    </page-header>
+    <page-grid>
+      <page-content>
+        <main><slot /></main>
+        <page-footer><Footer /></page-footer>
+      </page-content>
+    </page-grid>
+  </body>
+</html>
+
+<style>
+  page-header {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    min-width: 0;
+  }
+
+  page-nav {
+    display: block;
+    min-width: 0;
+  }
+
+  page-toc {
+    display: block;
+    min-width: 0;
+
+    @media screen and (width >= 64rem) {
+      --viewport-grid: min(100%, var(--grid-max-width));
+      --content-width: calc(
+        (7 * var(--viewport-grid) - 19 * var(--grid-gutter)) /
+        12
+      );
+
+      position: fixed;
+      inset-block: var(--page-offset-top) var(--page-offset-bottom);
+      inset-inline-end: var(--grid-edge);
+      width: min(
+        calc(3 * var(--grid-column-width) + 2 * var(--grid-gutter)),
+        calc(
+          50% -
+          var(--content-width) /
+          2 -
+          var(--grid-edge) -
+          var(--grid-gutter)
+        )
+      );
+    }
+  }
+
+  page-grid {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: var(--grid-max-width);
+    min-height: calc(100svh - var(--bar-nav-height) - var(--bar-toc-height));
+    margin-inline: auto;
+    padding-inline: var(--grid-gutter);
+    padding-block-start: var(--grid-gutter);
+  }
+
+  page-content {
+    display: flex;
+    flex-direction: column;
+    inline-size: 100%;
+    max-inline-size: var(--measure);
+    min-width: 0;
+    margin-inline: auto;
+    margin-block-start: -0.1em;
+
+    main {
+      flex: 1;
+    }
+
+    page-footer {
+      display: block;
+      margin-block-start: var(--space-xl);
+    }
+
+    @media (width >= 64rem) {
+      max-inline-size: calc((7 * 100% - 5 * var(--grid-gutter)) / 12);
+    }
+  }
+</style>

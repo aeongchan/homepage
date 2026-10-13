@@ -1,0 +1,22 @@
+---
+import ProjectCard from "@/components/ProjectCard.astro"
+import type { CollectionEntry } from "astro:content"
+
+type Props = { projects: CollectionEntry<"projects" | "skins">[] }
+
+const projects = [...Astro.props.projects].sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+)
+---
+
+<ul>
+  {projects.map((project) => <ProjectCard project={project} />)}
+</ul>
+
+<style>
+  ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+</style>

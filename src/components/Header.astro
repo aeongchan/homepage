@@ -1,0 +1,109 @@
+---
+import { Image } from "astro:assets"
+import logo from "@/assets/logo.png"
+import ThemeToggle from "@/components/ThemeToggle.astro"
+import { NAVIGATION, SITE } from "@/consts"
+import { normalizePath } from "@/lib/utils"
+
+const pathname = normalizePath(Astro.url.pathname) || "/"
+---
+
+<header data-bar="header">
+  <header-inner>
+    <a href="/" aria-label={SITE.title}>
+      <Image src={logo} alt="" width={72} height={72} />
+      <span>{SITE.title}</span>
+    </a>
+    <nav>
+      <ul>
+        {NAVIGATION.map(({ href, label }) => (
+          <li>
+            <a
+              href={href}
+              aria-current={
+                pathname === href
+                  ? "page"
+                  : pathname.startsWith(`${href}/`)
+                    ? "true"
+                    : undefined
+              }
+            >
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </header-inner>
+  <header-toggle>
+    <ThemeToggle />
+    <slot name="actions" />
+  </header-toggle>
+</header>
+
+<style>
+  header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+  }
+
+  header-inner {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+
+    > a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: fit-content;
+      font-weight: var(--font-weight-medium);
+      font-size: var(--step-0);
+      color: var(--foreground);
+      text-decoration-line: none;
+
+      img {
+        inline-size: 1.5rem;
+        block-size: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      @media (width < 26rem) {
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+
+  nav ul {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+
+    a {
+      display: block;
+      color: var(--muted-foreground);
+
+      &:hover,
+      &[aria-current] {
+        color: var(--foreground);
+      }
+    }
+  }
+
+  header-toggle {
+    display: flex;
+    align-items: center;
+    margin-inline-end: -0.5rem;
+
+    @media screen and (width >= 64rem) {
+      position: fixed;
+      inset-block-end: var(--page-offset-bottom);
+      inset-inline-start: calc(var(--grid-edge) - 0.5rem);
+      margin-inline-end: 0;
+    }
+  }
+</style>
