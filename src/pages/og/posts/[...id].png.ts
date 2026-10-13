@@ -4,7 +4,7 @@ import { formatDate } from "@/lib/utils"
 import type { APIRoute, GetStaticPaths } from "astro"
 import type { CollectionEntry } from "astro:content"
 
-type Props = { post: CollectionEntry<"blog"> }
+type Props = { post: CollectionEntry<"posts"> }
 
 export const getStaticPaths = (async () => {
   const posts = (await getPosts()).filter(({ data }) => !data.image)

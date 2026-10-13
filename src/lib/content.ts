@@ -1,7 +1,7 @@
 import { SITE } from "@/consts"
 import { getCollection, type CollectionEntry } from "astro:content"
 
-type Post = CollectionEntry<"blog">
+type Post = CollectionEntry<"posts">
 
 const showDrafts = import.meta.env.DEV || process.env.SHOW_DRAFTS === "true"
 
@@ -48,7 +48,7 @@ export function getDescription(post: Post, maxLength = 160): string {
 
 export async function getPosts(): Promise<Post[]> {
   const posts = await getCollection(
-    "blog",
+    "posts",
     ({ data }) => showDrafts || !data.draft,
   )
   return posts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())

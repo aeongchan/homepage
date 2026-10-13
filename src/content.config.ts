@@ -22,10 +22,10 @@ const postId = ({
     .replace(/\/index$/, "")
 }
 
-const blog = defineCollection({
+const posts = defineCollection({
   loader: glob({
     pattern: "**/[^_]*.md",
-    base: "./src/content/blog",
+    base: "./src/content/posts",
     generateId: postId,
   }),
   schema: ({ image }) =>
@@ -58,4 +58,4 @@ const showcase = (base: string) =>
 const projects = showcase("./src/content/projects")
 const skins = showcase("./src/content/skins")
 
-export const collections = { blog, projects, skins }
+export const collections = { posts, projects, skins }
