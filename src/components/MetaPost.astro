@@ -4,7 +4,7 @@ import { SITE } from "@/consts"
 import { getDescription, pageTitle } from "@/lib/content"
 
 type Props = {
-  post: CollectionEntry<"blog">
+  post: CollectionEntry<"posts">
 }
 
 const { post } = Astro.props
@@ -13,15 +13,14 @@ const description = getDescription(post) || SITE.description
 
 const base = Astro.site ?? new URL(Astro.url.origin)
 const url = new URL(Astro.url.pathname, base)
-const canonical = url
 const ogImage = image
   ? new URL(image.src, base)
-  : new URL(`/og/blog/${post.id}.png`, base)
+  : new URL(`/og/posts/${post.id}.png`, base)
 ---
 
 <title>{pageTitle(title)}</title>
 <meta name="description" content={description}>
-<link rel="canonical" href={canonical}>
+<link rel="canonical" href={url}>
 {draft && <meta name="robots" content="noindex, nofollow" />}
 
 <meta property="og:title" content={title}>

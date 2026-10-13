@@ -1,5 +1,5 @@
 ---
-import BlogCard from "@/components/BlogCard.astro"
+import PostCard from "@/components/PostCard.astro"
 import MetaPage from "@/components/MetaPage.astro"
 import Layout from "@/layouts/Layout.astro"
 import { getPosts } from "@/lib/content"
@@ -8,9 +8,9 @@ const posts = await getPosts()
 ---
 
 <Layout>
-  <MetaPage slot="head" title="Blog" />
+  <MetaPage slot="head" title="Posts" />
   <ul>
-    {posts.map((post) => <BlogCard post={post} />)}
+    {posts.map((post) => <PostCard post={post} />)}
   </ul>
 </Layout>
 

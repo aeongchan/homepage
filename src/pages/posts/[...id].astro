@@ -32,7 +32,7 @@ export async function getStaticPaths() {
   })
 }
 
-type Post = CollectionEntry<"blog">
+type Post = CollectionEntry<"posts">
 type Props = {
   post: Post
   prev?: Post
@@ -60,7 +60,7 @@ const tocHeadings = headings.filter(
   )}
   <PostActions slot="actions" prev={prev} next={next} />
   <ScrollToTop floating />
-  <article data-url={`/blog/${post.id}`}>
+  <article>
     <header>
       <h1>{post.data.title}</h1>
       <post-meta>

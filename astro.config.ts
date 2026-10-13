@@ -7,7 +7,6 @@ import {
 } from "./src/lib/expressive-code"
 import { calloutDirective } from "./src/lib/callout"
 import { externalLinks } from "./src/lib/external-links"
-import { headingNamespace } from "./src/lib/heading-namespace"
 import { headingAnchors } from "./src/lib/heading-anchors"
 
 export default defineConfig({
@@ -20,12 +19,7 @@ export default defineConfig({
     processor: satteri({
       features: { directive: true },
       mdastPlugins: [calloutDirective, inlineExpressiveCode],
-      hastPlugins: [
-        externalLinks,
-        blockExpressiveCode,
-        headingNamespace,
-        headingAnchors,
-      ],
+      hastPlugins: [externalLinks, blockExpressiveCode, headingAnchors],
     }),
   },
 })

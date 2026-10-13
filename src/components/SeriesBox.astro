@@ -2,7 +2,11 @@
 import ChevronIcon from "@/assets/icons/callouts/alt-arrow-down.svg"
 import type { CollectionEntry } from "astro:content"
 
-type Props = { name: string; posts: CollectionEntry<"blog">[]; current: string }
+type Props = {
+  name: string
+  posts: CollectionEntry<"posts">[]
+  current: string
+}
 
 const { name, posts, current } = Astro.props
 const position = posts.findIndex((post) => post.id === current) + 1
@@ -21,7 +25,7 @@ const collapsible = posts.length > 4
         {post.id === current ? (
           <span aria-current="page">{post.data.title}</span>
         ) : (
-          <a href={`/blog/${post.id}`}>{post.data.title}</a>
+          <a href={`/posts/${post.id}`}>{post.data.title}</a>
         )}
       </li>
     ))}
