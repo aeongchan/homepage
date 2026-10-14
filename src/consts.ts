@@ -5,7 +5,7 @@ import Twitter from "@/assets/icons/twitter.svg"
 export const SITE = {
   title: "aeong.win",
   description: "very personal website",
-  locale: "en-US",
+  locale: "ko-KR",
   dir: "ltr",
 } as const
 

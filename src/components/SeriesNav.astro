@@ -8,7 +8,7 @@ const { prev, next } = Astro.props
 ---
 
 {(prev || next) && (
-  <series-nav aria-label="Series navigation">
+  <series-nav aria-label="Series navigation" data-pagefind-ignore>
     {prev ? (
       <a href={`/posts/${prev.id}`} rel="prev">
         <span>Previous in series</span>

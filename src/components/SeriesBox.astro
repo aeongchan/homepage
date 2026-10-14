@@ -13,7 +13,7 @@ const position = posts.findIndex((post) => post.id === current) + 1
 const collapsible = posts.length > 4
 ---
 
-<series-box data-collapsible={collapsible || undefined}>
+<series-box data-collapsible={collapsible || undefined} data-pagefind-ignore>
   <series-title>
     <series-label>Series</series-label>
     <span>{name}</span>

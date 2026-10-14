@@ -1,0 +1,279 @@
+---
+import SearchIcon from "@/assets/icons/search.svg"
+---
+
+<button
+  id="search-trigger"
+  data-icon-button
+  aria-label="Search"
+  aria-haspopup="dialog"
+  aria-keyshortcuts="Control+K Meta+K"
+>
+  <SearchIcon aria-hidden="true" />
+</button>
+
+<dialog id="search-dialog" aria-label="Search...">
+  <search-field>
+    <SearchIcon aria-hidden="true" />
+    <input
+      id="search-input"
+      type="search"
+      placeholder="Search..."
+      aria-label="Search"
+      aria-controls="search-results"
+      autocomplete="off"
+      spellcheck="false"
+      enterkeyhint="go"
+    >
+  </search-field>
+  <p id="search-status" role="status"></p>
+  <ol id="search-results"></ol>
+</dialog>
+
+<style>
+  dialog {
+    inline-size: min(36rem, calc(100% - 2 * var(--grid-gutter)));
+    max-inline-size: none;
+    max-block-size: min(32rem, calc(100svh - 2 * var(--space-xl)));
+    margin: var(--space-xl) auto auto;
+    padding: 0;
+    color: var(--foreground);
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    overflow: hidden;
+
+    &[open] {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &::backdrop {
+      background-color: light-dark(rgb(0 0 0 / 0.2), rgb(0 0 0 / 0.5));
+    }
+  }
+
+  search-field {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    padding-inline: var(--space-s);
+    border-block-end: 1px solid var(--border);
+    color: var(--muted-foreground);
+
+    svg {
+      flex-shrink: 0;
+      inline-size: 1rem;
+      block-size: 1rem;
+    }
+
+    input {
+      flex: 1;
+      min-inline-size: 0;
+      padding-block: var(--space-xs);
+      font-size: max(16px, var(--step-0));
+      color: var(--foreground);
+      background: transparent;
+
+      &::placeholder {
+        color: var(--muted-foreground);
+      }
+
+      &:focus-visible {
+        outline: none;
+      }
+
+      &::-webkit-search-cancel-button {
+        display: none;
+      }
+    }
+  }
+
+  #search-status {
+    padding: var(--space-2xs) var(--space-s);
+    font-size: var(--step--1);
+    color: var(--muted-foreground);
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  ol {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    &:empty {
+      display: none;
+    }
+
+    :global(li + li) {
+      border-block-start: 1px solid var(--border);
+    }
+
+    :global(a) {
+      display: flex;
+      flex-direction: column;
+      gap: 0.125rem;
+      padding: var(--space-2xs) var(--space-s);
+      color: var(--foreground);
+
+      &:hover,
+      &:focus-visible {
+        background-color: color-mix(in oklab, var(--muted) 50%, transparent);
+        border-radius: 0;
+        outline: none;
+      }
+    }
+
+    :global(strong) {
+      font-weight: var(--font-weight-medium);
+    }
+
+    :global(small),
+    :global(p) {
+      font-size: var(--step--1);
+      color: var(--muted-foreground);
+    }
+
+    :global(mark) {
+      color: var(--foreground);
+      background-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+    }
+  }
+</style>
+
+<script>
+  type PagefindPage = {
+    url: string
+    excerpt: string
+    meta: { title?: string; date?: string }
+  }
+  type Pagefind = {
+    init(): Promise<void>
+    debouncedSearch(
+      term: string,
+    ): Promise<{ results: { data(): Promise<PagefindPage> }[] } | null>
+  }
+
+  const BUNDLE = "/pagefind/pagefind.js"
+  const LIMIT = 10
+
+  const trigger = document.getElementById("search-trigger")
+  const dialog = document.getElementById("search-dialog") as HTMLDialogElement
+  const input = document.getElementById("search-input") as HTMLInputElement
+  const status = document.getElementById("search-status") as HTMLElement
+  const results = document.getElementById("search-results") as HTMLElement
+
+  let pagefind: Promise<Pagefind | null> | undefined
+  let latest = 0
+
+  const loadPagefind = () =>
+    (pagefind ??= import(/* @vite-ignore */ BUNDLE).then(
+      async (module: Pagefind) => {
+        await module.init()
+        return module
+      },
+      () => null,
+    ))
+
+  const renderPage = (page: PagefindPage) => {
+    const link = document.createElement("a")
+    link.href = page.url
+
+    const title = document.createElement("strong")
+    title.textContent = page.meta.title ?? page.url
+    link.append(title)
+
+    if (page.meta.date) {
+      const date = document.createElement("small")
+      date.textContent = page.meta.date
+      link.append(date)
+    }
+
+    const excerpt = document.createElement("p")
+    excerpt.innerHTML = page.excerpt
+    link.append(excerpt)
+
+    const item = document.createElement("li")
+    item.append(link)
+    return item
+  }
+
+  const show = (message: string, items: HTMLElement[] = []) => {
+    status.textContent = message
+    results.replaceChildren(...items)
+  }
+
+  const search = async () => {
+    const term = input.value.trim()
+    const run = ++latest
+    if (!term) return show("")
+
+    const api = await loadPagefind()
+    if (run !== latest) return
+    if (!api) return show("Search is not available in dev mode")
+
+    const response = await api.debouncedSearch(term)
+    if (!response || run !== latest) return
+
+    const pages = await Promise.all(
+      response.results.slice(0, LIMIT).map((result) => result.data()),
+    )
+    if (run !== latest) return
+
+    const count = response.results.length
+    show(
+      count === 0
+        ? `No results for "${term}"`
+        : `${count} ${count === 1 ? "result" : "results"}`,
+      pages.map(renderPage),
+    )
+  }
+
+  const open = () => {
+    if (dialog.open) return
+    dialog.showModal()
+    input.select()
+    loadPagefind()
+  }
+
+  const focusable = () => [
+    input,
+    ...results.querySelectorAll<HTMLAnchorElement>("a"),
+  ]
+
+  if (trigger) trigger.onclick = open
+  input.addEventListener("input", search)
+
+  dialog.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close()
+    else if ((event.target as Element).closest("a")) dialog.close()
+  })
+
+  dialog.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      event.preventDefault()
+      dialog.close()
+      return
+    }
+    if (event.key === "Enter" && event.target === input) {
+      results.querySelector("a")?.click()
+      return
+    }
+    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return
+    const items = focusable()
+    const index = items.indexOf(document.activeElement as HTMLAnchorElement)
+    const next = items[index + (event.key === "ArrowDown" ? 1 : -1)]
+    if (!next) return
+    event.preventDefault()
+    next.focus()
+  })
+
+  document.addEventListener("keydown", (event) => {
+    if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== "k")
+      return
+    event.preventDefault()
+    if (dialog.open) dialog.close()
+    else open()
+  })
+</script>

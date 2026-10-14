@@ -23,9 +23,15 @@ import Footer from "@/components/Footer.astro"
 import Header from "@/components/Header.astro"
 import MetaHead from "@/components/MetaHead.astro"
 import { SITE } from "@/consts"
+
+type Props = {
+  lang?: string
+}
+
+const { lang = SITE.locale } = Astro.props
 ---
 
-<html lang={SITE.locale} dir={SITE.dir}>
+<html lang={lang} dir={SITE.dir}>
   <MetaHead>
     <slot name="head" />
   </MetaHead>

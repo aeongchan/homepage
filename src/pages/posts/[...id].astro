@@ -60,12 +60,12 @@ const tocHeadings = headings.filter(
   )}
   <PostActions slot="actions" prev={prev} next={next} />
   <ScrollToTop floating />
-  <article>
+  <article data-pagefind-body>
     <header>
       <h1>{post.data.title}</h1>
-      <post-meta>
+      <post-meta data-pagefind-ignore>
         {post.data.draft && <post-draft>Draft</post-draft>}
-        <time datetime={post.data.date.toISOString()}>
+        <time datetime={post.data.date.toISOString()} data-pagefind-meta="date">
           {formatDate(post.data.date)}
         </time>
         {post.data.tags && (
