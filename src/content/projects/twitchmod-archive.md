@@ -2,5 +2,5 @@
 name: TwitchMod Archive
 description: Official TwitchMod Mirror from South Korea
 link: https://twitchmod.aeong.win
-image: "@/assets/images/projects/mv6pzoie-1fufzi7i.png"
+image: "@/assets/images/projects/c1ac7d3b3cc9.png"
 ---

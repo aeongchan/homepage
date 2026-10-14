@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+backend:
+  name: github
+  repo: aeongchan/homepage
+  branch: main
+  commit_messages:
+    create: "content: add {{path}}"
+    update: "content: update {{path}}"
+    delete: "content: remove {{path}}"
+    uploadMedia: "content: add {{path}}"
+    deleteMedia: "content: remove {{path}}"
+
+media_folder: /src/assets/images
+public_folder: "@/assets/images"
+media_libraries:
+  all:
+    filename_template: "{{uuid_short}}"
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+output:
+  omit_empty_optional_fields: true
+
+collections:
+  - name: posts
+    folder: /src/content/posts
+    media_folder: /src/assets/images/posts
+    public_folder: "@/assets/images/posts"
+    slug:
+      template: "{{uuid_short}}"
+      editable: false
+    sortable_fields:
+      fields: [date, title]
+      default:
+        field: date
+        direction: descending
+    fields:
+      - name: title
+      - { name: description, widget: text, required: false }
+      - { name: date, widget: datetime, type: date, default: "{{now}}" }
+      - { name: draft, widget: boolean, default: true }
+      - { name: series, required: false }
+      - { name: seriesOrder, widget: number, required: false }
+      - { name: tags, widget: list, required: false }
+      - { name: image, widget: image, required: false }
+      - { name: body, widget: richtext, modes: [raw, rich_text], required: false }
+
+  - name: projects
+    folder: /src/content/projects
+    media_folder: /src/assets/images/projects
+    public_folder: "@/assets/images/projects"
+    identifier_field: name
+    slug: &showcase-slug
+      template: "{{slug}}"
+      editable: [create]
+    fields: &showcase-fields
+      - name: name
+      - { name: description, widget: text }
+      - { name: link, pattern: ["^https?://", "Must start with http:// or https://"] }
+      - { name: tags, widget: list, required: false }
+      - { name: image, widget: image, required: false }
+
+  - name: skins
+    folder: /src/content/skins
+    media_folder: /src/assets/images/skins
+    public_folder: "@/assets/images/skins"
+    identifier_field: name
+    slug: *showcase-slug
+    fields: *showcase-fields

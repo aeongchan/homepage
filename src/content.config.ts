@@ -1,39 +1,14 @@
 import { glob } from "astro/loaders"
 import { defineCollection } from "astro:content"
 import { z } from "astro/zod"
-import { slug } from "github-slugger"
-
-const postId = ({
-  entry,
-  data,
-}: {
-  entry: string
-  data: Record<string, unknown>
-}) => {
-  if (typeof data.uuid === "string" && data.uuid) {
-    return `n${data.uuid.replaceAll("-", "").slice(0, 12).toLowerCase()}`
-  }
-  if (data.slug) return String(data.slug)
-  return entry
-    .replace(/\.[^./]+$/, "")
-    .split("/")
-    .map((segment) => slug(segment))
-    .join("/")
-    .replace(/\/index$/, "")
-}
 
 const posts = defineCollection({
-  loader: glob({
-    pattern: "**/[^_]*.md",
-    base: "./src/content/posts",
-    generateId: postId,
-  }),
+  loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/posts" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
       description: z.string().optional(),
       date: z.coerce.date(),
-      uuid: z.uuid().optional(),
       series: z.string().optional(),
       seriesOrder: z.number().optional(),
       tags: z.array(z.string()).optional(),
