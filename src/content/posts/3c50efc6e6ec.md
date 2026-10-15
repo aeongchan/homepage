@@ -1,6 +1,6 @@
 ---
-title: 집에 가성비 OpenWrt 공유기가 있다는걸 몰랐다
-description: ipTIME AX3000Q 공유기 OpenWrt 펌웨어 설치기
+title: ipTIME AX3000Q 공유기 OpenWrt 펌웨어 설치기
+description: 집에 가성비 OpenWrt 공유기가 있다는걸 몰랐다
 date: 2026-10-15
 draft: false
 tags:
