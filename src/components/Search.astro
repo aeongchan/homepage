@@ -7,12 +7,11 @@ import SearchIcon from "@/assets/icons/search.svg"
   data-icon-button
   aria-label="Search"
   aria-haspopup="dialog"
-  aria-keyshortcuts="Control+K Meta+K"
 >
   <SearchIcon aria-hidden="true" />
 </button>
 
-<dialog id="search-dialog" aria-label="Search...">
+<dialog id="search-dialog" aria-label="Search">
   <search-field>
     <SearchIcon aria-hidden="true" />
     <input
@@ -153,6 +152,7 @@ import SearchIcon from "@/assets/icons/search.svg"
     debouncedSearch(
       term: string,
     ): Promise<{ results: { data(): Promise<PagefindPage> }[] } | null>
+    preload(term: string): Promise<void>
   }
 
   const BUNDLE = "/pagefind/pagefind.js"
@@ -213,6 +213,7 @@ import SearchIcon from "@/assets/icons/search.svg"
     if (run !== latest) return
     if (!api) return show("Search is not available in dev mode")
 
+    api.preload(term).catch(() => {})
     const response = await api.debouncedSearch(term)
     if (!response || run !== latest) return
 
@@ -237,43 +238,11 @@ import SearchIcon from "@/assets/icons/search.svg"
     loadPagefind()
   }
 
-  const focusable = () => [
-    input,
-    ...results.querySelectorAll<HTMLAnchorElement>("a"),
-  ]
-
   if (trigger) trigger.onclick = open
   input.addEventListener("input", search)
 
   dialog.addEventListener("click", (event) => {
     if (event.target === dialog) dialog.close()
     else if ((event.target as Element).closest("a")) dialog.close()
-  })
-
-  dialog.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      event.preventDefault()
-      dialog.close()
-      return
-    }
-    if (event.key === "Enter" && event.target === input) {
-      results.querySelector("a")?.click()
-      return
-    }
-    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return
-    const items = focusable()
-    const index = items.indexOf(document.activeElement as HTMLAnchorElement)
-    const next = items[index + (event.key === "ArrowDown" ? 1 : -1)]
-    if (!next) return
-    event.preventDefault()
-    next.focus()
-  })
-
-  document.addEventListener("keydown", (event) => {
-    if (!(event.metaKey || event.ctrlKey) || event.key.toLowerCase() !== "k")
-      return
-    event.preventDefault()
-    if (dialog.open) dialog.close()
-    else open()
   })
 </script>
