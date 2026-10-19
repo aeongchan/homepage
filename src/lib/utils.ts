@@ -3,7 +3,7 @@ export function formatDate(date: Date): string {
     year: "numeric",
     month: "short",
     day: "numeric",
-    timeZone: "UTC",
+    timeZone: "Asia/Seoul",
   }).format(date)
 }
 

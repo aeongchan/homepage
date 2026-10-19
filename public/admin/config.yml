@@ -39,7 +39,7 @@ collections:
     fields:
       - name: title
       - { name: description, widget: text, required: false }
-      - { name: date, widget: datetime, type: date, default: "{{now}}" }
+      - { name: date, widget: datetime, default: "{{now}}", input_timezone: Asia/Seoul }
       - { name: draft, widget: boolean, default: true }
       - { name: series, required: false }
       - { name: seriesOrder, widget: number, required: false }
